@@ -13,7 +13,6 @@ services:
       - phpfpm
     volumes: &appvolumes
       - ./src:/var/www/html:delegated
-      - ~/.composer:/var/www/html/var/composer_home:delegated
       - ~/.composer:/var/www/.composer:delegated
       - sockdata:/sock
 
@@ -39,6 +38,12 @@ services:
     env_file: env/db.env
     volumes:
       - dbdata:/var/lib/mysql
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
 
 volumes:
   dbdata:
