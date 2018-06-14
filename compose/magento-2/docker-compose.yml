@@ -1,6 +1,3 @@
-# Mark Shust's Docker Configuration for Magento (https://github.com/markoshust/docker-magento)
-# Version 13.0.0
-
 version: "3"
 
 services:
@@ -17,13 +14,13 @@ services:
       - sockdata:/sock
 
   phpfpm:
-    image: markoshust/magento-php:7.1-fpm-2
+    image: ximbo/magento2-php:7.1
     links:
       - db
     volumes: *appvolumes
 
   cron:
-    image: markoshust/magento-php:7.1-fpm-2
+    image: ximbo/magento2-php:7.1
     user: root
     command: /usr/local/bin/cronstart
     tty: true
