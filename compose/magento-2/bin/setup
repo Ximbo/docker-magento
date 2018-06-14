@@ -1,25 +1,49 @@
 #!/bin/bash
-./bin/cli chmod u+x bin/magento
+#./bin/cli chmod u+x bin/magento
 
-docker-compose exec phpfpm /usr/local/bin/php ./bin/magento setup:install \
+echo "Setup new magento installation..."
+./bin/magento setup:install \
   --db-host=db \
   --db-name=magento \
   --db-user=magento \
   --db-password=magento \
   --base-url=http://magento2.test/ \
   --admin-firstname=Admin \
-  --admin-lastname=User \
-  --admin-email=dummy@gmail.com \
-  --admin-user=magento2 \
-  --admin-password=magento2 \
+  --admin-lastname=Admin \
+  --admin-email=admin@example.com \
+  --admin-user=admin \
+  --admin-password=a123456 \
   --language=en_US \
   --currency=USD \
-  --timezone=America/New_York \
+  --timezone=Europe/Moscow \
+  --backend-frontname=manager \
+  --use-sample-data \
   --use-rewrites=1
 
-./bin/fixperms
+#./bin/fixperms;
 
-echo "Turning on developer mode.."
+echo "Turning on developer mode..."
 ./bin/magento deploy:mode:set developer
 
+echo "Copy auth file..."
+./bin/cli cp /var/www/.composer/auth.json /var/www/html/var/composer_home/auth.json
+
+echo "Deploy magento sample data..."
+./bin/magento sampledata:deploy
+./bin/magento setup:upgrade
+./bin/magento cache:flush
+
 ./bin/magento indexer:reindex
+
+./bin/composer dump-autoload -o
+
+echo "
+===================== 🚀 Done 🚀 ===================
+
+      Magento 2 Installed successfully!
+
+      🌎 Admin: http://magento2.test/manager
+      👤 User: admin
+      🔑 Password: a123456
+
+===================== 🚀 Done 🚀 ==================="
