@@ -1,7 +1,7 @@
 FROM php:7.1-fpm
-MAINTAINER Mark Shust <mark@shust.com>
 
 RUN apt-get update && apt-get install -y \
+  curl \
   cron \
   git \
   libfreetype6-dev \
@@ -12,7 +12,11 @@ RUN apt-get update && apt-get install -y \
   libxslt1-dev \
   mysql-client \
   vim \
-  zip
+  zip \
+  nano
+
+RUN curl --location --output /usr/local/bin/mhsendmail https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 \
+  && chmod +x /usr/local/bin/mhsendmail
 
 RUN docker-php-ext-configure \
   gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/

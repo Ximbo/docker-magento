@@ -1,5 +1,4 @@
 FROM nginx:1.13
-MAINTAINER Mark Shust <mark@shust.com>
 
 RUN groupadd -g 1000 app \
  && useradd -g 1000 -u 1000 -d /var/www -s /bin/bash app
