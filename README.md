@@ -79,7 +79,7 @@ git init
 ```
 mkdir magento2 && cd $_
 git init
-git remote add origin git@github.com:markoshust/docker-magento.git
+git remote add origin git@github.com:Ximbo/docker-magento.git
 git fetch origin
 git checkout origin/master -- compose/magento-2-windows
 mv compose/magento-2-windows/* .
